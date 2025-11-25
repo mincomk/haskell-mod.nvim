@@ -38,22 +38,6 @@ end
 
 ---@param cabal_content string[]
 ---@return string[]
-local function get_hs_source_dirs1(cabal_content)
-    local dirs = {}
-    for _, line in ipairs(cabal_content) do
-        line = line:gsub("%s*%-%-.*$", "")
-        local value = line:match("^%s*hs%-source%-dirs%s*:%s*(.+)$")
-        if value then
-            for dir in value:gmatch("\\S+") do
-                table.insert(dirs, dir)
-            end
-        end
-    end
-    return dirs
-end
-
----@param cabal_content string[]
----@return string[]
 local function get_hs_source_dirs(cabal_content)
     local dirs = {}
     local in_hs_dirs = false
