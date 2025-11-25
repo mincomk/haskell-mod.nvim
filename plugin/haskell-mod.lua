@@ -1,0 +1,1 @@
+require("haskell-mod").setup()

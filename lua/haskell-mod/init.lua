@@ -5,14 +5,18 @@ local M = {}
 
 ---@return table
 function M.setup()
-    vim.api.nvim_create_autocmd("BufNewFile", {
+    vim.api.nvim_create_autocmd("BufEnter", {
         pattern = "*.hs",
         callback = function()
-            H.handle_new_file(App)
+            M.handle_new_file()
         end
     })
 
     return M
+end
+
+function M.handle_new_file()
+    H.handle_new_file(App)
 end
 
 return M
