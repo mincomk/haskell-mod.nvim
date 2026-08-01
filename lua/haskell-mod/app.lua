@@ -28,6 +28,10 @@ function App.list_dir_absolute(path)
     return files
 end
 
+function App.path_exists(path)
+    return vim.loop.fs_stat(path.path) ~= nil
+end
+
 function App.read_file(path)
     local lines = vim.fn.readfile(path.path)
 

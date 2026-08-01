@@ -1,5 +1,6 @@
 local Array = require("haskell-mod.utils.array")
 local FilePath = require("haskell-mod.utils.filepath")
+local Search = require("haskell-mod.utils.search")
 
 ---@type RootFinder
 local M = {}
@@ -15,25 +16,7 @@ end
 ---@param file_path FilePath
 ---@return FilePath | nil
 local function find_cabal(app, file_path)
-    local cur = file_path:clone()
-
-    while not cur:is_root() do
-        local files = app.list_dir_absolute(cur)
-
-        local found = Array.find(files, match_cabal)
-        if found ~= nil then
-            return found
-        else
-            cur = cur:parent()
-        end
-
-        -- stop searching at `.git`. There's no 허접 that makes a code over git root
-        if Array.any(files, function(path) return path:basename() == ".git" end) then
-            return nil
-        end
-    end
-
-    return nil
+    return Search.find_up(app, file_path, match_cabal)
 end
 
 ---@param cabal_content string[]

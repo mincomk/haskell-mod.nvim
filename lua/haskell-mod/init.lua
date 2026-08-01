@@ -5,7 +5,10 @@ local M = {}
 
 ---@return table
 function M.setup()
+    local group = vim.api.nvim_create_augroup("haskell-mod", { clear = true })
+
     vim.api.nvim_create_autocmd("BufEnter", {
+        group = group,
         pattern = "*.hs",
         callback = function()
             M.handle_new_file()
